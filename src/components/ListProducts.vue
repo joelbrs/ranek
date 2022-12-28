@@ -12,6 +12,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { api } from '@/services'
+import { serialize } from '@/helpers'
  
 export default Vue.extend({
     name: 'ListProducts',
@@ -24,11 +25,25 @@ export default Vue.extend({
 
     methods: {
         getProducts(): any {
-            api.get('produto')
+            api.get(this.url)
             .then(r => {
                 this.products = r.data;
             })
         }
+    },
+
+    computed: {
+        url() {
+            const query = serialize(this.$route.query);
+
+            return 'produto?_limit=9' + query
+        }
+    },
+
+    watch: {
+        url() {
+            this.getProducts()
+        },
     },
 
     created() {

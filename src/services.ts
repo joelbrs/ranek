@@ -7,5 +7,9 @@ const axiosInstance = axios.create({
 export const api = {
     get(endpoint: string): Promise<AxiosResponse> {
         return axiosInstance.get(endpoint)
+    },
+
+    post(endpoint: string, body: any): Promise<AxiosResponse> {
+        return axiosInstance.post(endpoint, body);
     }
 } 

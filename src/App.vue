@@ -1,32 +1,96 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <TheHeader/>
+    <main id="main">
+      <router-view/>
+    </main>
+    <TheFooter/>
   </div>
 </template>
 
+<script>
+import TheHeader from '@/components/TheHeader.vue'
+import TheFooter from '@/components/TheFooter.vue'
+
+export default {
+  components: { TheHeader, TheFooter }
+}
+
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  box-sizing: border-box;
+}
+
+body, ul, li, h1, h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+  color: #345;
+
+  background: url('./assets/pattern.svg') repeat top;
+}
+
+a {
+  color: #345;
+
+  list-style: none;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+
+  max-width: 100%;
+}
+
+.btn {
+  display: block;
+
+  background: #87f;
+  
+  border-radius: 4px;
+  border: none;
+
+  cursor: pointer;
+
+  color: #fff;
   text-align: center;
-  color: #2c3e50;
+  font-size: 1rem;
+  font-family: Helvetica, sans-serif;
+
+  box-shadow: 0 4px 8px rgba(30, 60, 90, 0.2);
+
+  transition: all 0.3s;
+
+  padding: 10px 30px;
+
 }
 
-nav {
-  padding: 30px;
+.btn:hover {
+  background: #65d;
+
+  transform: scale(1.1);
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#app {
+  display: flex;
+  
+  flex-direction: column;
+
+  min-height: 100vh;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+#main {
+  flex: 1;
 }
+
 </style>

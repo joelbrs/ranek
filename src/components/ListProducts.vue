@@ -11,7 +11,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-
+import { api } from '@/services'
+ 
 export default Vue.extend({
     name: 'ListProducts',
 
@@ -23,10 +24,9 @@ export default Vue.extend({
 
     methods: {
         getProducts(): any {
-            fetch('http://localhost:3000/produto')
-            .then(r => r.json())
+            api.get('produto')
             .then(r => {
-                this.products = r;
+                this.products = r.data;
             })
         }
     },

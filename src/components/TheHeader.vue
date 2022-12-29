@@ -4,7 +4,8 @@
         <router-link to="/" class="logo">
             <img src="@/assets/ranek.svg" alt="Ranek">
         </router-link>
-        <router-link to="/login" class="btn">Vender / Login</router-link>
+        <router-link to="/user" v-if="$store.state.login" class="btn">{{ name }}</router-link>
+        <router-link to="/login" v-else class="btn">Vender / Login</router-link>
     </nav>
   </header>
 </template>
@@ -13,7 +14,13 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-    name: 'TheHeader'
+    name: 'TheHeader',
+
+    computed: {
+        name() {
+            return this.$store.state.usuario.nome.replace(/ .*/, '')
+        }
+    }
 })
 </script>
 

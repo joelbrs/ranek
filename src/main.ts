@@ -7,11 +7,11 @@ import LoadingPage from '@/components/LoadingPage.vue'
 Vue.config.productionTip = false
 
 Vue.component('LoadingPage', LoadingPage);
-Vue.filter('priceNumber', (value: string) => {
-  const numberValue = Number(value);
+Vue.filter('priceNumber', (value: string | number) => {
+  value = Number(value);
 
-  if (!isNaN(numberValue)) {
-    return numberValue.toLocaleString('pt-BR', {
+  if (!isNaN(value)) {
+    return value.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL'
     })

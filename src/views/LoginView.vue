@@ -34,7 +34,8 @@ export default Vue.extend({
 
     methods: {
         signIn() {
-            return ''
+            this.$store.dispatch('getUser', this.login.email)
+            this.$router.push('/user')
         }
     },
 

@@ -1,21 +1,25 @@
 <template>
   <section class="products-container">
-    <div v-if="products && products.length > 0" class="products">
-        <div v-for="product in products" :key="product.id" class="product">
-            <router-link to="/">
-                <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0]">
-                <p class="price">{{ product.preco }}</p>
-                <h2 class="title">{{ product.nome }}</h2>
-                <p class="description">{{ product.descricao }}</p>
-            </router-link>
+    <transition mode="out-in">
+        <div v-if="products && products.length > 0" class="products" key="products">
+            <div v-for="product in products" :key="product.id" class="product">
+                <router-link to="/">
+                    <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0]">
+                    <p class="price">{{ product.preco }}</p>
+                    <h2 class="title">{{ product.nome }}</h2>
+                    <p class="description">{{ product.descricao }}</p>
+                </router-link>
+            </div>
+    
+            <PaginationProducts :totalProducts="totalProducts" :productsPerPage="9" />
         </div>
-
-        <PaginationProducts :totalProducts="totalProducts" :productsPerPage="9"/>
-    </div> 
-
-    <div v-else-if="products && products.length === 0">
-        <p class="without-results" >Search without results. Try another term.</p>
-    </div>
+    
+        <div v-else-if="products && products.length === 0" key="without-results">
+            <p class="without-results">Search without results. Try another term.</p>
+        </div>
+    
+        <LoadingPage v-else key="loading"/>
+    </transition>
   </section>
 </template>
 
@@ -24,24 +28,28 @@ import Vue from 'vue'
 import { api } from '@/services'
 import { serialize } from '@/helpers'
 import PaginationProducts from '@/components/PaginationProducts.vue'
- 
+import LoadingPage from '@/components/LoadingPage.vue' 
+
 export default Vue.extend({
     name: 'ListProducts',
 
     data() {
         return {
-            products: [] as Array<object>,
+            products: null,
             totalProducts: 0,
         }
     },
 
     methods: {
         getProducts(): any {
-            api.get(this.url)
-            .then(r => {
-                this.totalProducts = Number(r.headers['x-total-count'])
-                this.products = r.data;
-            })
+            this.products = null;
+            setTimeout(() => {
+                api.get(this.url)
+                    .then(r => {
+                        this.totalProducts = Number(r.headers['x-total-count'])
+                        this.products = r.data;
+                    })
+            }, 1000)
         }
     },
 
@@ -63,7 +71,7 @@ export default Vue.extend({
         this.getProducts()
     },
 
-    components: { PaginationProducts }
+    components: { PaginationProducts, LoadingPage }
 })
 </script>
 

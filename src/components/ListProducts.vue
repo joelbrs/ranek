@@ -3,9 +3,9 @@
     <transition mode="out-in">
         <div v-if="products && products.length > 0" class="products" key="products">
             <div v-for="product in products" :key="product.id" class="product">
-                <router-link to="/">
+                <router-link :to="{name: 'product', params: {id: product.id}}">
                     <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0]">
-                    <p class="price">{{ product.preco }}</p>
+                    <p class="price">{{ product.preco | priceNumber }}</p>
                     <h2 class="title">{{ product.nome }}</h2>
                     <p class="description">{{ product.descricao }}</p>
                 </router-link>

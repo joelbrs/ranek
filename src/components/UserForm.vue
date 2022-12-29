@@ -10,7 +10,7 @@
     <input type="password" name="password" id="password" v-model="senha">
   
     <label for="cep">Postal Code</label>
-    <input type="text" name="cep" id="cep" v-model="cep">
+    <input type="text" name="cep" id="cep" v-model="cep" @keyup="cepAutoComplete">
 
     <label for="street">Street</label>
     <input type="text" name="street" id="street" v-model="rua">
@@ -35,6 +35,7 @@
 
 <script lang=ts>
 import Vue from 'vue'
+import { getCep } from '@/services'
 
 export default Vue.extend({
     name: 'UserForm',
@@ -121,6 +122,21 @@ export default Vue.extend({
                 this.$store.commit('UPDATE_USER', {estado: value})
             }
         },
+    },
+
+    methods: {
+        cepAutoComplete() {
+            const cep = this.cep.replace(/\D/g, '')
+
+            if (cep.length === 8) {
+                getCep(cep).then(r => {
+                    this.rua = r.data.logradouro
+                    this.bairro = r.data.bairro
+                    this.cidade = r.data.localidade
+                    this.estado = r.data.uf
+                })
+            }
+        }
     }
 })
 </script>

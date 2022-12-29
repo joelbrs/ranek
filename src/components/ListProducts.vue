@@ -9,6 +9,8 @@
                 <p class="description">{{ product.descricao }}</p>
             </router-link>
         </div>
+
+        <PaginationProducts :totalProducts="totalProducts" :productsPerPage="9"/>
     </div> 
 
     <div v-else-if="products && products.length === 0">
@@ -21,6 +23,7 @@
 import Vue from 'vue'
 import { api } from '@/services'
 import { serialize } from '@/helpers'
+import PaginationProducts from '@/components/PaginationProducts.vue'
  
 export default Vue.extend({
     name: 'ListProducts',
@@ -28,6 +31,7 @@ export default Vue.extend({
     data() {
         return {
             products: [] as Array<object>,
+            totalProducts: 0,
         }
     },
 
@@ -35,6 +39,7 @@ export default Vue.extend({
         getProducts(): any {
             api.get(this.url)
             .then(r => {
+                this.totalProducts = Number(r.headers['x-total-count'])
                 this.products = r.data;
             })
         }
@@ -56,7 +61,9 @@ export default Vue.extend({
 
     created() {
         this.getProducts()
-    }
+    },
+
+    components: { PaginationProducts }
 })
 </script>
 

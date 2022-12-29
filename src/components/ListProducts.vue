@@ -36,7 +36,7 @@ export default Vue.extend({
     data() {
         return {
             products: null,
-            totalProducts: 0,
+            totalProducts: 0 as number,
         }
     },
 

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
 import ProductPage from '@/components/ProductPage.vue'
 
 Vue.use(VueRouter)
@@ -16,6 +17,11 @@ const routes: Array<RouteConfig> = [
     name: 'product',
     component: ProductPage,
     props: true
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
   },
 ]
 

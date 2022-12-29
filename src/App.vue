@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <TheHeader/>
+    <TheHeader />
     <main id="main">
-      <router-view/>
+      <transition mode="out-in">
+        <router-view />
+      </transition>
     </main>
-    <TheFooter/>
+    <TheFooter />
   </div>
 </template>
 
@@ -23,7 +25,12 @@ export default {
   box-sizing: border-box;
 }
 
-body, ul, li, h1, h2, p {
+body,
+ul,
+li,
+h1,
+h2,
+p {
   margin: 0;
   padding: 0;
 }
@@ -56,7 +63,7 @@ img {
   display: block;
 
   background: #87f;
-  
+
   border-radius: 4px;
   border: none;
 
@@ -83,7 +90,7 @@ img {
 
 #app {
   display: flex;
-  
+
   flex-direction: column;
 
   min-height: 100vh;
@@ -93,7 +100,12 @@ img {
   flex: 1;
 }
 
-input, textarea {
+label {
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
   border-radius: 4px;
   border: 1px solid #fff;
 
@@ -108,8 +120,10 @@ input, textarea {
   transition: all .3s;
 }
 
-input:hover, textarea:hover,
-input:focus, input:focus {
+input:hover,
+textarea:hover,
+input:focus,
+input:focus {
   outline: none;
 
   box-shadow: 0 6px 12px rgba(30, 60, 90, 0.2);
@@ -133,5 +147,4 @@ input:focus, input:focus {
 .v-leave-active {
   transition: all 0.3s;
 }
-
 </style>

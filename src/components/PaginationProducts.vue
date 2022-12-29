@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="page in totalPages" :key="page">
+        <li v-for="page in pages" :key="page">
             <router-link :to="{ query: query(page) }">{{ page }}</router-link>
         </li>
     </ul>
@@ -33,6 +33,22 @@ export default Vue.extend({
     },
 
     computed: {
+        pages() {
+            const current = Number(this.$route.query._page);
+            const range = 9;
+            const total = this.totalPages;
+            const offset = Math.ceil(range / 2)
+            let pagesArray = [];
+
+            for (let i = 1; i <= total; i++) {
+                pagesArray.push(i);
+            }
+            
+            pagesArray.splice(0, current - offset);
+            pagesArray.splice(range, this.totalPages);
+
+            return pagesArray;
+        },
         totalPages() {
             const total = this.totalProducts / this.productsPerPage
         
